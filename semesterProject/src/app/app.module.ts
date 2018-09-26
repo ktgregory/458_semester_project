@@ -3,21 +3,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+import { ViewPage } from '../pages/view/view';
+import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-
+import { CardsPage } from '../pages/cards/cards';
+import { EditPage } from '../pages/edit/edit';
+import { UserPage } from '../pages/user/user';
+import { NewcardsPage } from '../pages/newcards/newcards';
+import { SelectPage } from '../pages/select/select';
+import { CreatePage } from '../pages/create/create';
+import { AboutPage } from '../pages/about/about';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    SettingsPage,
+    ViewPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CardsPage,
+    UserPage,
+    CreatePage,
+    SelectPage,
+    AboutPage,
+    NewcardsPage,
+    EditPage
   ],
   imports: [
     BrowserModule,
@@ -26,10 +39,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    ViewPage,
+    SettingsPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CardsPage,
+    UserPage,   
+    CreatePage,
+    SelectPage,
+    AboutPage,
+    NewcardsPage,
+    EditPage
   ],
   providers: [
     StatusBar,
