@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ViewPage } from '../view/view';
 import { SettingsPage } from '../settings/settings';
 import { HomePage } from '../home/home';
-import { EditPage } from '../edit/edit';
+import { NewcardsPage } from '../newcards/newcards';
 import { AboutPage } from '../about/about';
 
 @Component({
@@ -14,7 +14,7 @@ export class TabsPage {
   tab1Root = HomePage;
   tab2Root = SettingsPage;
   tab3Root = ViewPage;
-  tab4Root = EditPage;
+  tab4Root = NewcardsPage;
   tab5Root = AboutPage;
 
   constructor() {

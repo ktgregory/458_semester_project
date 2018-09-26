@@ -8,7 +8,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CardsPage } from '../pages/cards/cards';
-import { EditPage } from '../pages/edit/edit';
+import { SignupPage } from '../pages/signup/signup';
 import { UserPage } from '../pages/user/user';
 import { NewcardsPage } from '../pages/newcards/newcards';
 import { SelectPage } from '../pages/select/select';
@@ -30,7 +30,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SelectPage,
     AboutPage,
     NewcardsPage,
-    EditPage
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SelectPage,
     AboutPage,
     NewcardsPage,
-    EditPage
+    SignupPage
   ],
   providers: [
     StatusBar,
