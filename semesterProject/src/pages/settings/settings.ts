@@ -7,8 +7,17 @@ import { NavController } from 'ionic-angular';
 })
 export class SettingsPage {
 
+
+  firstname = "Katie";
+  lastname = "Gregory"
+  email = "kcgregor@go.olemiss.edu";
+  age = "21";
+  school = "University of Mississippi";
+
+
   constructor(public navCtrl: NavController) {
 
   }
+
 
 }

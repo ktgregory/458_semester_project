@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CreatePage } from '../create/create';
+import { SelectPage } from '../select/select';
 
 /**
  * Generated class for the NewcardsPage page.
@@ -20,6 +22,16 @@ export class NewcardsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewcardsPage');
+  }
+
+  goToCreatePage()
+  {
+    this.navCtrl.push(CreatePage);
+  }
+
+  goToSelectPage()
+  {
+    this.navCtrl.push(SelectPage);
   }
 
 }

@@ -8,8 +8,20 @@ import { SettingsPage } from '../settings/settings';
 })
 export class UserPage {
 
+  firstname = "Katie";
+  lastname = "Gregory"
+  email = "kcgregor@go.olemiss.edu";
+  school = "University of Mississippi";
+
+
   constructor(public navCtrl: NavController) {
 
   }
 
+  goToSettingsPage() {
+    this.navCtrl.push(SettingsPage);
+  }
+  
+
 }
+

@@ -2,7 +2,7 @@
     <ion-navbar> 
       <ion-title>My Profile</ion-title>  
       <ion-buttons start>
-          <button ion-button icon-only>
+          <button ion-button icon-only (click)="goToSettingsPage()">
             <ion-icon name="cog"></ion-icon>
           </button>
         </ion-buttons>
@@ -10,5 +10,24 @@
   </ion-header>
 
 <ion-content padding>
+
+    <ion-list>
+        <ion-item>
+          <h3>First Name</h3>
+          <p>{{firstname}}</p>
+    </ion-item>
+    <ion-item>
+          <h3>Last Name</h3>
+          <p>{{lastname}}</p>
+    </ion-item>
+    <ion-item>
+          <h3>Email</h3>
+          <p>{{email}}</p>
+    </ion-item>
+    <ion-item>
+          <h3>School</h3>
+          <p>{{school}}</p>
+     </ion-item>
+    </ion-list>
 
 </ion-content>

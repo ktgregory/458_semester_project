@@ -13,6 +13,7 @@ import { UserPage } from '../pages/user/user';
 import { NewcardsPage } from '../pages/newcards/newcards';
 import { SelectPage } from '../pages/select/select';
 import { CreatePage } from '../pages/create/create';
+import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,6 +29,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserPage,
     CreatePage,
     SelectPage,
+    LoginPage,
     AboutPage,
     NewcardsPage,
     SignupPage
@@ -47,6 +49,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     UserPage,   
     CreatePage,
     SelectPage,
+    LoginPage,
     AboutPage,
     NewcardsPage,
     SignupPage
