@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
+import {ForgotpasswordPage} from '../forgotpassword/forgotpassword';
 
 @Component({
   selector: 'page-login',
@@ -26,9 +27,9 @@ export class LoginPage {
 
   }
 
-  goToResetPassword()
+  goToForgotPassword()
   {
-
+    this.navCtrl.push(ForgotpasswordPage);
   }
 
   createAccount()
