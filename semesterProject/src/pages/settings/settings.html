@@ -1,17 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Contact
+      Profile Settings
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
+<ion-content padding>
+
+    <ion-list>
+        <ion-item>
+          <h3>First Name</h3>
+          <ion-input type="text" value="{{firstname}}"></ion-input>
     </ion-item>
-  </ion-list>
+    <ion-item>
+          <h3>Last Name</h3>
+          <ion-input type="text" value="{{lastname}}"></ion-input>
+    </ion-item>
+    <ion-item>
+        <h3>Email</h3>
+        <ion-input type="text" value="{{email}}"></ion-input>
+    </ion-item>
+    <ion-item>
+        <h3>School</h3>
+        <ion-input type="text" value="{{school}}"></ion-input>
+     </ion-item>
+    </ion-list>
+
+    <button ion-button block>Update Profile Info</button>
 </ion-content>
