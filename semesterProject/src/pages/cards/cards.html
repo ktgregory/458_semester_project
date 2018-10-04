@@ -1,33 +1,41 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Cards</ion-title>
+    <ion-title>Set Title Goes Here!</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Card Group Title Will Display Here</h2>
   <ion-card>
     <!--<img src="../../assets/imgs/xbox-logo.jpg"/>-->
     <ion-card-content>
       
-      <p>
-        Any words or images on the card will go here
-      </p>
-
-      <p>
-       <button ion-button>
-         <ion-icon name="arrow-back"> Previous</ion-icon>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-auto>
+          <ion-img src="../assets/imgs/starrynight.jpeg"></ion-img>
+          <p>Who painted this?</p>
+        </ion-col>
+        </ion-row>
+      <ion-row>
+        <ion-col >
+       <button ion-button icon-only item-start block>
+         <ion-icon name="arrow-back"></ion-icon>
        </button>
+      </ion-col>
 
-        <button ion-button>
-           <ion-icon name="code-download"> Flip</ion-icon>
+      <ion-col>
+        <button ion-button icon-only center block>
+           <ion-icon name="code-download"></ion-icon>
         </button>
+      </ion-col>
 
-        <button ion-button>
-           <ion-icon name="arrow-forward"> Next</ion-icon>
+      <ion-col>
+        <button ion-button icon-only item-end block>
+           <ion-icon name="arrow-forward"></ion-icon>
         </button>
-      </p>
-      
+      </ion-col>
+      </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 </ion-content>

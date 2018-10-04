@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CreatePage } from '../create/create';
 import { SelectPage } from '../select/select';
 
@@ -17,21 +17,45 @@ import { SelectPage } from '../select/select';
 })
 export class NewcardsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewcardsPage');
   }
 
-  goToCreatePage()
-  {
-    this.navCtrl.push(CreatePage);
-  }
-
   goToSelectPage()
   {
     this.navCtrl.push(SelectPage);
   }
+
+  goToCreatePage()
+  {
+    const prompt = this.alertCtrl.create({
+      title: 'Create a New Stack!',
+      message: "Enter a name for this new stack:",
+      inputs: [
+        {
+          name: 'stacktitle',
+          placeholder: 'Stack Title'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Create!',
+          handler: data => {
+            this.navCtrl.push(CreatePage);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }  
 
 }

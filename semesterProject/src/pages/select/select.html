@@ -14,34 +14,29 @@
 
 
 <ion-content padding>
-  <h2>Choose a Card Set to Edit</h2>
+  <p>Choose a card set to edit!</p>
   <ion-list>
     
-    <ion-item>
-      <ion-card>
-        <ion-card-title>
-          The name of the card set will go here!
-        </ion-card-title>
-        <p>
-          <button ion-button (click)="goToCreate()">
-            Edit This Set
-          </button>
-        </p>
-      </ion-card>
-    </ion-item>
-
-    <ion-item>
-      <ion-card>
-        <ion-card-title>
-          The name of the second card set will go here!
-        </ion-card-title>
-        <p>
-          <button ion-button (click)="goToCreate()">
-            Edit This Set
-          </button>
-        </p>
-      </ion-card>
-    </ion-item>
-
-  </ion-list>
+      <ion-item>
+        
+        <button ion-button (click)="goToCreate()">
+          Art History 101, Exam 1
+        </button>
+          
+      </ion-item>
+      <ion-item>
+        <button ion-button (click)="goToCreate()">
+          Art History 101, Exam 2
+        </button>
+      </ion-item>
+      <ion-item>
+        
+        <button ion-button (click)="goToCreate()">
+          Theater 201, Exam 1
+        </button>
+          
+      </ion-item>
+  
+    </ion-list>
+         
 </ion-content>

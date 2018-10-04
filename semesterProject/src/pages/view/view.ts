@@ -8,12 +8,14 @@ import { CardsPage } from '../cards/cards';
 })
 export class ViewPage {
 
+  
   constructor(public navCtrl: NavController) {
 
   }
 
   goToCardsPage()
   {
+
     this.navCtrl.push(CardsPage);
   }
 
