@@ -22,4 +22,8 @@ export class CreatePage {
     console.log('ionViewDidLoad CreatePage');
   }
 
+  Save(){
+    this.navCtrl.pop();
+  }
+
 }

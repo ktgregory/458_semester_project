@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CreatePage } from '../create/create';
 
 /**
  * Generated class for the SelectPage page.
@@ -20,6 +21,10 @@ export class SelectPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectPage');
+  }
+
+  goToCreate(){
+    this.navCtrl.push(CreatePage);
   }
 
 }
