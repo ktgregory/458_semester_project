@@ -71,6 +71,13 @@ deleteStack()
   });
   confirm.present()
 }
-  
 
+  presentAlert(message) {
+    let alert = this.alertCtrl.create({
+    title: 'What this does!',
+    subTitle: message,
+    buttons: ['Okay']
+  });
+  alert.present();
+  }
 }

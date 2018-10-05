@@ -18,19 +18,19 @@
         </ion-row>
       <ion-row>
         <ion-col >
-       <button ion-button icon-only item-start block>
+       <button ion-button icon-only item-start block (click) = "presentAlert('This will show the previous card')">
          <ion-icon name="arrow-back"></ion-icon>
        </button>
       </ion-col>
 
       <ion-col>
-        <button ion-button icon-only center block>
+        <button ion-button icon-only center block (click)="presentAlert('This will flip the card and show the other side')">
            <ion-icon name="code-download"></ion-icon>
         </button>
       </ion-col>
 
       <ion-col>
-        <button ion-button icon-only item-end block>
+        <button ion-button icon-only item-end block (click)="presentAlert('This will show the next card')">
            <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-col>
