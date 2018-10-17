@@ -19,6 +19,17 @@ import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule} from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../environment/environment';
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { CardServiceProvider } from '../providers/card-service/card-service';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -38,7 +49,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'seniorProject'),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -60,7 +75,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserServiceProvider,
+    CardServiceProvider,
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
