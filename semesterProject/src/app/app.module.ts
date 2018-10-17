@@ -25,9 +25,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule} from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environment/environment';
-import { UserServiceProvider } from '../providers/user-service/user-service';
-import { CardServiceProvider } from '../providers/card-service/card-service';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
+import { CardProvider } from '../providers/card/card';
 
 
 @NgModule({
@@ -76,9 +76,9 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserServiceProvider,
-    CardServiceProvider,
-    AuthServiceProvider
+    AuthProvider,
+    UserProvider,
+    CardProvider
   ]
 })
 export class AppModule {}
