@@ -29,19 +29,10 @@ export class UserProvider {
       })
   }
 
-  // async getCurrentUserData()
-  // {
-  //   let data;
-  //   let uid = await this.auth.getUserID();
-  //   let ref = await this.afs.firestore.collection(`users`).where("uid","==",uid); 
-  //   await ref.get().then((querySnapshot) => { 
-  //     querySnapshot.forEach((doc) => {
-  //       data = doc.data();
-  //     })
-  //   });
-  //   return data; 
-  // }
-  // ^ (katie) i wrote this because i got confused on what part of the project i was supposed to do :)
+async getCurrentUserData()
+ {
+
+ }
 
 
 }

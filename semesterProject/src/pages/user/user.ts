@@ -20,13 +20,20 @@ export class UserPage {
 
   }
 
+  
+  ngOnInit() 
+  {
+  // runs when page is loaded 
+  // (for async functions that cant run in constructor, ie user provider functions)
+
+  }
+
   goToSettingsPage() {
     this.navCtrl.push(SettingsPage);
   }
   
 logoutUser()
   {
-    console.log("logging out");
     this.auth.logoutUser();
     window.location.reload();
   }
