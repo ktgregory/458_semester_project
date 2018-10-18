@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-user',
@@ -14,7 +16,7 @@ export class UserPage {
   school = "University of Mississippi";
 
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private auth: AuthProvider) {
 
   }
 
@@ -22,6 +24,12 @@ export class UserPage {
     this.navCtrl.push(SettingsPage);
   }
   
+logoutUser()
+  {
+    console.log("logging out");
+    this.auth.logoutUser();
+    window.location.reload();
+  }
 
 }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFirestore} from 'angularfire2/firestore';
 
 /*
   Generated class for the UserProvider provider.
@@ -10,8 +11,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UserProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello UserProvider Provider');
+  constructor(private afs: AngularFirestore) {
+    
+  }
+
+  async createNewUser(uid:string, email:string, firstname: string, lastname: string, school: string)
+  {
+
+    await this.afs.doc(`users/${uid}`).set({
+      uid: uid,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      school: school,
+      type:"reg"
+      })
   }
 
 }
