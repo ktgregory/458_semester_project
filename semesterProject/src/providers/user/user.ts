@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore} from 'angularfire2/firestore';
+import { AuthProvider } from '../auth/auth';
 
 /*
   Generated class for the UserProvider provider.
@@ -11,7 +12,7 @@ import { AngularFirestore} from 'angularfire2/firestore';
 @Injectable()
 export class UserProvider {
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private auth: AuthProvider) {
     
   }
 
@@ -27,5 +28,20 @@ export class UserProvider {
       type:"reg"
       })
   }
+
+  // async getCurrentUserData()
+  // {
+  //   let data;
+  //   let uid = await this.auth.getUserID();
+  //   let ref = await this.afs.firestore.collection(`users`).where("uid","==",uid); 
+  //   await ref.get().then((querySnapshot) => { 
+  //     querySnapshot.forEach((doc) => {
+  //       data = doc.data();
+  //     })
+  //   });
+  //   return data; 
+  // }
+  // ^ (katie) i wrote this because i got confused on what part of the project i was supposed to do :)
+
 
 }

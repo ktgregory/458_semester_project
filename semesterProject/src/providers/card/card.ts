@@ -1,17 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthProvider } from '../auth/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 
-/*
-  Generated class for the CardProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class CardProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello CardProvider Provider');
+  constructor(private auth: AuthProvider, private afs: AngularFirestore) {
+    
   }
+
+async getCurrentUserStacks()
+  {
+    let stacks = [];
+    let uid = await this.auth.getUserID();
+    let ref = await this.afs.firestore.collection(`stacks`).where("uid","==",uid); 
+    await ref.get().then((querySnapshot) => { 
+      querySnapshot.forEach((doc) => {
+        stacks.push(doc.data());
+      })
+    });
+    return stacks; 
+
+  }
+
 
 }
