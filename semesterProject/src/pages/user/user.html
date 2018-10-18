@@ -1,16 +1,18 @@
-<ion-header>
-    <ion-navbar> 
-      <ion-title>My Profile</ion-title>  
-      <ion-buttons start>
-          <button ion-button icon-only>
-              <ion-icon name="log-out"></ion-icon>
-            </button>
-          <button ion-button icon-only (click)="goToSettingsPage()">
-            <ion-icon name="cog"></ion-icon>
-          </button>
-        </ion-buttons>
-    </ion-navbar>
-  </ion-header>
+  <ion-header>
+      <ion-navbar text-center>
+          <ion-buttons left>
+              <button ion-button icon-only (click)="goToSettingsPage()">
+                <ion-icon name="settings"></ion-icon>
+              </button>
+              </ion-buttons>
+              <ion-buttons right>
+              <button ion-button icon-only (click)="logoutUser()">
+                <ion-icon name="log-out"></ion-icon>
+              </button>
+            </ion-buttons>
+        <ion-title>My Profile</ion-title>
+      </ion-navbar>
+    </ion-header>
 
 <ion-content padding>
 

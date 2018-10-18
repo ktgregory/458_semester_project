@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
+import { AuthProvider } from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-user',
@@ -14,7 +16,15 @@ export class UserPage {
   school = "University of Mississippi";
 
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private auth: AuthProvider) {
+
+  }
+
+  
+  ngOnInit() 
+  {
+  // runs when page is loaded 
+  // (for async functions that cant run in constructor, ie user provider functions)
 
   }
 
@@ -22,6 +32,11 @@ export class UserPage {
     this.navCtrl.push(SettingsPage);
   }
   
+logoutUser()
+  {
+    this.auth.logoutUser();
+    window.location.reload();
+  }
 
 }
 

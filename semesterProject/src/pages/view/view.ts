@@ -9,14 +9,20 @@ import { CardsPage } from '../cards/cards';
 export class ViewPage {
 
   
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private cardProv: ) {
+
+  }
+
+  async ngOnInt()
+  {
 
   }
 
   goToCardsPage()
   {
-
     this.navCtrl.push(CardsPage);
   }
+
+
 
 }

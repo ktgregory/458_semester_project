@@ -15,7 +15,7 @@ NOTE: justify-content-center
 
 <ion-content padding>
   <ion-grid>
-  <ion-row><h3>Art History 101, Exam 1</h3></ion-row>
+  <ion-row><h3>Stack Name Here</h3></ion-row>
   <ion-row>
 </ion-row>
 <ion-card>
@@ -24,7 +24,7 @@ NOTE: justify-content-center
       <ion-card-header>Card 1 of 1</ion-card-header>
     </ion-col>
     <ion-col col-1 float-right>
-      <button ion-button small clear icon-only><ion-icon item-end name="trash"></ion-icon>
+      <button ion-button small clear icon-only (click)="presentAlert('This will delete the currently shown card')"><ion-icon item-end name="trash"></ion-icon>
     </button>
     </ion-col>
   </ion-row>
@@ -33,7 +33,7 @@ NOTE: justify-content-center
     <ion-label stacked>Side 1</ion-label>
     <ion-input type="Text"></ion-input>
   </ion-item>
-  <button ion-button outline>Add Image</button>
+  <button ion-button outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
 </ion-row>
 <ion-row justify-content-center> 
   <ion-item>
@@ -43,19 +43,19 @@ NOTE: justify-content-center
   </ion-row>
   <ion-row justify-content-center>
     <ion-col col-auto>
-        <button ion-button outline>Add Image</button>
+        <button ion-button outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
       </ion-col>
     </ion-row>
     <ion-row >
         <ion-col>
-            <button ion-button icon-only clear item-end block>
+            <button ion-button icon-only clear item-end block (click)="presentAlert('This will move to the next card in the stack, if it exists.')">
                <ion-icon name="arrow-back"></ion-icon>
             </button>
           </ion-col>
           <ion-col col-6>
           </ion-col>
           <ion-col>
-              <button ion-button icon-only clear item-start block>
+              <button ion-button icon-only clear item-start block (click)="presentAlert('This will move to the previous card in the stack, if it exists.')">
                 <ion-icon name="arrow-forward"></ion-icon>
               </button>
           </ion-col>
