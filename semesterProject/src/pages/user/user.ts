@@ -21,7 +21,7 @@ export class UserPage {
   }
 
   
-  ngOnInit() 
+  async ngOnInit() 
   {
   // runs when page is loaded 
   // (for async functions that cant run in constructor, ie user provider functions)

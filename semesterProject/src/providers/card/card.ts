@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { AuthProvider } from '../auth/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
 
+
 @Injectable()
 export class CardProvider {
 
+ 
   constructor(private auth: AuthProvider, private afs: AngularFirestore) {
     
   }
@@ -31,6 +33,10 @@ export class CardProvider {
         cards.push(doc.data());
       })
     });
+    // if (cards.length==0)
+    // {
+    //   Promise.reject();
+    // }
     return cards; 
 
   }

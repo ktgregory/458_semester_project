@@ -29,7 +29,7 @@ export class UserProvider {
       })
   }
 
-async getCurrentUserData()
+async getCurrentUserData() // get user id from auth service 
  {
 
  }

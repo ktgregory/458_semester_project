@@ -6,26 +6,17 @@
 
 <ion-content padding>
   <ion-list>
-    
-    <ion-item>
+    <ion-item *ngIf = "noStacks">
+      <ion-label padding>You have no stacks!</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let stack of stacks">
       
-      <button ion-button (click)="goToCardsPage()">
-        Art History 101, Exam 1
+      <button ion-button (click)="goToCardsPage(stack.stackid)">
+        {{stack.name}}
       </button>
         
     </ion-item>
-    <ion-item>
-      <button ion-button (click)="goToCardsPage()">
-        Art History 101, Exam 2
-      </button>
-    </ion-item>
-    <ion-item>
-      
-      <button ion-button (click)="goToCardsPage()">
-        Theater 201, Exam 1
-      </button>
-        
-    </ion-item>
+  
 
   </ion-list>
 </ion-content>
