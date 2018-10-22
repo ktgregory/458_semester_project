@@ -31,12 +31,7 @@ export class SignupPage {
     });
   }
 
-  /**
-   * If the form is valid it will call the AuthData service to sign the user up password displaying a loading
-   *  component while the user waits.
-   *
-   * If the form is invalid it will just log the form value, feel free to handle that as you like.
-   */
+
 
   async signupUser(){
     if (!this.signupForm.valid){
@@ -70,3 +65,11 @@ export class SignupPage {
     }
   }
 }
+
+
+/*
+SOURCE: 
+
+https://javebratt.com/ionic-firebase-tutorial-auth/
+
+*/
