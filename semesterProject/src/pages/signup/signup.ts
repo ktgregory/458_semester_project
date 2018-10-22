@@ -68,6 +68,7 @@ export class SignupPage {
 
 
 /*
+
 SOURCE: 
 
 https://javebratt.com/ionic-firebase-tutorial-auth/

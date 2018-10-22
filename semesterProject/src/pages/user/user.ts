@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
+import { ChangepasswordPage } from '../changepassword/changepassword';
 
 @Component({
   selector: 'page-user',
@@ -30,6 +31,10 @@ export class UserPage {
 
   goToSettingsPage() {
     this.navCtrl.push(SettingsPage);
+  }
+  
+  goToChangePassword() {
+    this.navCtrl.push(ChangepasswordPage);
   }
   
 logoutUser()

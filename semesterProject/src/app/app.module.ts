@@ -16,6 +16,7 @@ import { CreatePage } from '../pages/create/create';
 import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
 import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
+import { ChangepasswordPage } from '../pages/changepassword/changepassword';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -45,6 +46,7 @@ import { CardProvider } from '../providers/card/card';
     AboutPage,
     NewcardsPage,
     ForgotpasswordPage,
+    ChangepasswordPage,
     SignupPage
   ],
   imports: [
@@ -70,6 +72,7 @@ import { CardProvider } from '../providers/card/card';
     AboutPage,
     NewcardsPage,
     ForgotpasswordPage,
+    ChangepasswordPage,
     SignupPage
   ],
   providers: [

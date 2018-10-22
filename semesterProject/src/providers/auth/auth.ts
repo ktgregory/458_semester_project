@@ -63,6 +63,11 @@ export class AuthProvider {
     );
   }
 
+  changePassword(newPassword:string)
+  {
+    return this.afAuth.auth.currentUser.updatePassword(newPassword);
+  }
+
   updateUserEmail(currentEmail: string, password: string, newEmail:string): Promise<any>
   {
     this.loginUser(currentEmail, password);
