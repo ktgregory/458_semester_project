@@ -4,6 +4,7 @@ import { SettingsPage } from '../settings/settings';
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
 import { ChangepasswordPage } from '../changepassword/changepassword';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-user',
@@ -11,20 +12,19 @@ import { ChangepasswordPage } from '../changepassword/changepassword';
 })
 export class UserPage {
 
-  firstname = "Katie";
-  lastname = "Gregory"
-  email = "kcgregor@go.olemiss.edu";
-  school = "University of Mississippi";
+  info = "";
 
-
-  constructor(public navCtrl: NavController, private auth: AuthProvider) {
+  constructor(public navCtrl: NavController, private auth: AuthProvider,
+    private userProv: UserProvider) {
 
   }
 
   
   async ngOnInit() 
   {
-  // runs when page is loaded 
+    this.info = await this.userProv.getCurrentUserData();
+    console.log(this.info);
+      // runs when page is loaded 
   // (for async functions that cant run in constructor, ie user provider functions)
 
   }

@@ -30,6 +30,16 @@ export class UserProvider {
 
 async getCurrentUserData() // get user id from auth service 
  {
+  let info;
+  let uid = await this.auth.getUserID();
+  let ref = await this.afs.firestore.collection(`users`).where("uid","==",uid); 
+  await ref.get().then((querySnapshot) => { 
+    querySnapshot.forEach((doc) => {
+      info = doc.data();
+    })
+  });
+
+  return info; 
 
  }
 

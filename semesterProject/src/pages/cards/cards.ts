@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, NavParams} from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { AsyncPipe } from '@angular/common';
+import { timeoutWith } from 'rxjs/operators';
 
 @Component({
   selector: 'page-cards',
@@ -16,6 +17,8 @@ export class CardsPage {
   cards = [];
   front = "";
   back = "";
+  imageFront="";
+  imageBack="";
   frontSide=true; //when this is true, show front.
   stackNotEmpty:Boolean;
 
@@ -60,7 +63,8 @@ export class CardsPage {
     this.frontSide=true;
     this.front = this.cards[this.cardIndex].front;
     this.back = this.cards[this.cardIndex].back;
-
+    this.imageFront = this.cards[this.cardIndex].frontimage;
+    this.imageBack = this.cards[this.cardIndex].backimage;
   }
 
   decrementCard()
@@ -70,6 +74,8 @@ export class CardsPage {
     this.frontSide=true;
     this.front = this.cards[this.cardIndex].front;
     this.back = this.cards[this.cardIndex].back;
+    this.imageFront = this.cards[this.cardIndex].frontimage;
+    this.imageBack = this.cards[this.cardIndex].backimage;
 
   }
   
