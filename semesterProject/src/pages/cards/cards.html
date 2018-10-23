@@ -16,7 +16,7 @@
         <ng-container *ngIf="frontSide">
           <ion-row justify-content-center>
             <ion-col col-6>
-              <ion-img src="assets/imgs/starrynight.jpeg"></ion-img>
+              <ion-img *ngIf="imageFront!=''" src={{imageFront}}></ion-img>
               <p>{{front}}</p>
             </ion-col>
           </ion-row>
@@ -24,7 +24,7 @@
       <ng-container *ngIf="frontSide==false">
         <ion-row justify-content-center>
           <ion-col col-6>
-            <ion-img src="assets/imgs/starrynight.jpeg"></ion-img>
+            <ion-img *ngIf="imageBack!=''" src={{imageBack}}></ion-img>
             <p>{{back}}</p>
           </ion-col>
         </ion-row>
