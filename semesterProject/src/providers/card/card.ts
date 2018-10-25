@@ -43,12 +43,16 @@ export class CardProvider {
 
   async createNewStack() // uses set 
   {
+    let id = this.afs.createId();
+    await this.afs.doc(`users/${id}`).set({
+     
+    });
 
   }
 
   async deleteStackWithID(stackID:String)
   {
-    return this.afs.firestore.collection('stacks').where("stackID","==",stackID);
+    return this.afs.doc(`stacks/${stackID}`).delete();
   }
 
   // async changeUserInfo()
@@ -61,7 +65,6 @@ export class CardProvider {
   //   }).then(
   //     any=>
   //     {
-        
   //         let alert = this.alertCtrl.create({
   //           message: "Your information has been updated.",
   //           buttons: [
@@ -71,9 +74,7 @@ export class CardProvider {
   //             }
   //           ]
   //         });
-  //       alert.present();
-
-        
+  //       alert.present();      
   //     }
   //   );
 
@@ -84,7 +85,6 @@ export class CardProvider {
 
   async deleteCard(cardID:String)
   {
-    return this.afs.firestore.collection('cards').where("cardID","==",cardID);
 
   }
 
