@@ -40,6 +40,8 @@ export class CardsPage {
         this.stackNotEmpty = true;
         this.front = await this.cards[this.cardIndex].front;
         this.back = await this.cards[this.cardIndex].back;
+        this.imageFront = this.cards[this.cardIndex].frontimage;
+        this.imageBack = this.cards[this.cardIndex].backimage;
         this.totalCards = await this.cards.length;
       }
   }

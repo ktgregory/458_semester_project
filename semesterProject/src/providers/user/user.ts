@@ -25,7 +25,7 @@ export class UserProvider {
       email: email,
       school: school,
       type:"reg"
-      })
+      });
   }
 
 async getCurrentUserData() // get user id from auth service 
