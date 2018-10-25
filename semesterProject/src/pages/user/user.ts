@@ -29,6 +29,13 @@ export class UserPage {
 
   }
 
+
+  ionViewWillEnter()
+  {
+    this.ngOnInit();
+  }
+
+
   goToSettingsPage() {
     this.navCtrl.push(SettingsPage);
   }
