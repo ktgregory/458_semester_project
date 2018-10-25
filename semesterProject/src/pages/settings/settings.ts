@@ -41,9 +41,11 @@ export class SettingsPage {
   async changeUserInfo()
   {
     let userID = await this.authData.getUserID();
-    this.afs.doc(`users/${userID}`).update({firstname:this.userForm.value.firstname});
-    this.afs.doc(`users/${userID}`).update({lastname:this.userForm.value.lastname});
-    this.afs.doc(`users/${userID}`).update({school:this.userForm.value.school}).then(
+    this.afs.doc(`users/${userID}`).update({
+      firstname:this.userForm.value.firstname,
+      lastname:this.userForm.value.lastname,
+      school:this.userForm.value.school
+    }).then(
       any=>
       {
         

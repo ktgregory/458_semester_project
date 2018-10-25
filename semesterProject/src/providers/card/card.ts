@@ -41,4 +41,56 @@ export class CardProvider {
 
   }
 
+  async createNewStack() // uses set 
+  {
+
+  }
+
+  async deleteStackWithID(stackID:String)
+  {
+    return this.afs.firestore.collection('stacks').where("stackID","==",stackID);
+  }
+
+  // async changeUserInfo()
+  // {
+  //   let userID = await this.authData.getUserID();
+  //   this.afs.doc(`users/${userID}`).update({
+  //     firstname:this.userForm.value.firstname,
+  //     lastname:this.userForm.value.lastname,
+  //     school:this.userForm.value.school
+  //   }).then(
+  //     any=>
+  //     {
+        
+  //         let alert = this.alertCtrl.create({
+  //           message: "Your information has been updated.",
+  //           buttons: [
+  //             {
+  //               text: "Ok",
+  //               role: 'cancel'
+  //             }
+  //           ]
+  //         });
+  //       alert.present();
+
+        
+  //     }
+  //   );
+
+  async editCard() //uses "update"
+  { 
+
+  }
+
+  async deleteCard(cardID:String)
+  {
+    return this.afs.firestore.collection('cards').where("cardID","==",cardID);
+
+  }
+
+  async createCard() // uses "set"
+  {
+
+  }
+
 }
