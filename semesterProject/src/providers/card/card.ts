@@ -55,8 +55,11 @@ export class CardProvider {
 
   async deleteStackWithID(stackID:string)
   {
-    //need to pull all cards with the id and delete them
-    this.afs.collection(`stacks`).doc(stackID).delete();
+    let cards = await this.getCardsByStackID(stackID);
+    for (let card of cards){
+      this.deleteCard(card.cardid);
+    }
+    await this.afs.collection(`stacks`).doc(stackID).delete();
   }
 
   // async changeUserInfo()
@@ -84,12 +87,29 @@ export class CardProvider {
 
   async editCard(backText:String, backImg:String, cardID:String, frontText:String, frontImg:String) //uses "update"
   { 
-    await this.afs.doc(`cards/${cardID}`).update({
-      back: backText,
-      backimage: backImg,
-      front: frontText,
-      frontimage: frontImg
-    });
+    if (backText != ''){
+      await this.afs.doc(`cards/${cardID}`).update({
+        back: backText
+      });
+    }
+
+    if (backImg != ''){
+      await this.afs.doc(`cards/${cardID}`).update({
+        backimage: backImg
+      });
+    }
+
+    if (frontText != ''){
+      await this.afs.doc(`cards/${cardID}`).update({
+        front: frontText
+      });
+    }
+
+    if(frontImg != ''){
+      await this.afs.doc(`cards/${cardID}`).update({
+        frontimage: frontImg
+      });
+    }
   }
 
   async deleteCard(cardID:String)
@@ -105,7 +125,8 @@ export class CardProvider {
       backimage: backImg,
       front: frontText,
       frontimage: frontImg,
-      stackid: stackID
+      stackid: stackID,
+      cardid: id
     });
   }
 

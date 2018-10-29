@@ -18,54 +18,68 @@ NOTE: justify-content-center
   <ion-row><h3>{{stackname}}</h3></ion-row>
   <ion-row>
 </ion-row>
+<form [formGroup]="cardForm" (ngSubmit)="save()">
 <ion-card>
   <ion-row>
     <ion-col col-10>
-      <ion-card-header>Card {{cardNumber}} of {{totalCards}}</ion-card-header>
+      <ion-card-header *ngIf="existingCard(); else elseBlock">Card {{cardNumber}} of {{totalCards}}</ion-card-header>
+      <ng-template #elseBlock><ion-card-header>New Card</ion-card-header></ng-template>
     </ion-col>
     <ion-col col-1 float-right>
-      <button ion-button small clear icon-only (click)="presentAlert('This will delete the currently shown card')"><ion-icon item-end name="trash"></ion-icon>
+      <button *ngIf="existingCard()" ion-button type="button" small clear icon-only (click)="deleteCard()"><ion-icon item-end name="trash"></ion-icon>
     </button>
     </ion-col>
   </ion-row>
 <ion-row justify-content-center>
   <ion-item>
     <ion-label stacked>Side 1</ion-label>
-    <ion-input type="Text" placeholder={{front}}></ion-input>
+    <ion-input type="Text" placeholder={{this.front}} formControlName="front"></ion-input>
   </ion-item>
-  <button ion-button outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
+  <button ion-button type="button" outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
 </ion-row>
 <ion-row justify-content-center> 
   <ion-item>
     <ion-label stacked>Side 2</ion-label>
-    <ion-input type="Text" placeholder={{back}}></ion-input>
+    <ion-input type="Text" placeholder={{this.back}} formControlName="back"></ion-input>
   </ion-item>
   </ion-row>
   <ion-row justify-content-center>
     <ion-col col-auto>
-        <button ion-button outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
+        <button ion-button type="button" outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
       </ion-col>
     </ion-row>
     <ion-row >
         <ion-col>
-            <button *ngIf="cardNumber != 1" ion-button icon-only clear item-end block (click)="decrementCard()">
+            <button *ngIf="cardIndex != 0" type="button" ion-button icon-only clear item-end block (click)="decrementCard()">
                <ion-icon name="arrow-back"></ion-icon>
             </button>
           </ion-col>
           <ion-col col-6>
           </ion-col>
           <ion-col>
-              <button ion-button icon-only clear item-start block (click)="incrementCard()">
+              <button *ngIf="existingCard()" type="button" ion-button icon-only clear item-start block (click)="incrementCard()">
                 <ion-icon name="arrow-forward"></ion-icon>
               </button>
           </ion-col>
     </ion-row>
 </ion-card>
   <ion-row justify-content-center>
-      <button ion-button block (click)="leave()">OK, I'm Done!</button>
-    </ion-row>
-    <ion-row justify-content-center>
-        <button ion-button clear block (click)="deleteStack()">Delete this stack.</button>
-      </ion-row>
+    <button ion-button block type="submit">Save Current Card</button>
+  </ion-row>
+
+</form>
+
+  <ion-row justify-content-center>
+    <button ion-button block (click)="leave()">OK, I'm Done!</button>
+  </ion-row>
+  <ion-row justify-content-center>
+    <button ion-button clear block (click)="deleteStack()">Delete this stack.</button>
+  </ion-row>
+
+
+
   </ion-grid>
+
+
+
 </ion-content>
