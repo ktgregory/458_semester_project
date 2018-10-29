@@ -41,18 +41,22 @@ export class CardProvider {
 
   }
 
-  async createNewStack() // uses set 
+  async createNewStack(stackname:string, id:string) // uses set 
   {
-    let id = this.afs.createId();
-    await this.afs.doc(`users/${id}`).set({
-     
+    //let id = this.afs.createId();
+    let userid = this.auth.getUserID();
+    await this.afs.collection(`stacks`).doc(id).set({
+     name: stackname,
+     uid: userid,
+     stackid: id
     });
 
   }
 
-  async deleteStackWithID(stackID:String)
+  async deleteStackWithID(stackID:string)
   {
-    return this.afs.doc(`stacks/${stackID}`).delete();
+    //need to pull all cards with the id and delete them
+    this.afs.collection(`stacks`).doc(stackID).delete();
   }
 
   // async changeUserInfo()
@@ -78,19 +82,31 @@ export class CardProvider {
   //     }
   //   );
 
-  async editCard() //uses "update"
+  async editCard(backText:String, backImg:String, cardID:String, frontText:String, frontImg:String) //uses "update"
   { 
-
+    await this.afs.doc(`cards/${cardID}`).update({
+      back: backText,
+      backimage: backImg,
+      front: frontText,
+      frontimage: frontImg
+    });
   }
 
   async deleteCard(cardID:String)
   {
-
+    return this.afs.doc(`cards/${cardID}`).delete();
   }
 
-  async createCard() // uses "set"
+  async createCard(stackID:String, backText:String, backImg:String, frontText:String, frontImg:String) // uses "set"
   {
-
+    let id = this.afs.createId();
+    await this.afs.doc(`cards/${id}`).set({
+      back: backText,
+      backimage: backImg,
+      front: frontText,
+      frontimage: frontImg,
+      stackid: stackID
+    });
   }
 
 }

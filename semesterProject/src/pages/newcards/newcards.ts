@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CreatePage } from '../create/create';
 import { SelectPage } from '../select/select';
+import { CardProvider } from '../../providers/card/card';
+import { AngularFirestore } from 'angularfire2/firestore';
+
 
 /**
  * Generated class for the NewcardsPage page.
@@ -17,8 +20,10 @@ import { SelectPage } from '../select/select';
 })
 export class NewcardsPage {
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private cardProv: CardProvider, private afs: AngularFirestore) {
   }
+
+  stackname = '';
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewcardsPage');
@@ -50,7 +55,10 @@ export class NewcardsPage {
         {
           text: 'Create!',
           handler: data => {
-            this.navCtrl.push(CreatePage);
+            let id = this.afs.createId();
+            this.cardProv.createNewStack(data.stacktitle, id);
+
+            this.navCtrl.push(CreatePage, {stackid:id, name:this.stackname});
           }
         }
       ]

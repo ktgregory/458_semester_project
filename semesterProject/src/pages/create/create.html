@@ -15,13 +15,13 @@ NOTE: justify-content-center
 
 <ion-content padding>
   <ion-grid>
-  <ion-row><h3>Stack Name Here</h3></ion-row>
+  <ion-row><h3>{{stackname}}</h3></ion-row>
   <ion-row>
 </ion-row>
 <ion-card>
   <ion-row>
     <ion-col col-10>
-      <ion-card-header>Card 1 of 1</ion-card-header>
+      <ion-card-header>Card {{cardNumber}} of {{totalCards}}</ion-card-header>
     </ion-col>
     <ion-col col-1 float-right>
       <button ion-button small clear icon-only (click)="presentAlert('This will delete the currently shown card')"><ion-icon item-end name="trash"></ion-icon>
@@ -31,14 +31,14 @@ NOTE: justify-content-center
 <ion-row justify-content-center>
   <ion-item>
     <ion-label stacked>Side 1</ion-label>
-    <ion-input type="Text"></ion-input>
+    <ion-input type="Text" placeholder={{front}}></ion-input>
   </ion-item>
   <button ion-button outline (click)="presentAlert('This will prompt the user to choose an image to upload')">Add Image</button>
 </ion-row>
 <ion-row justify-content-center> 
   <ion-item>
     <ion-label stacked>Side 2</ion-label>
-    <ion-input type="Text"></ion-input>
+    <ion-input type="Text" placeholder={{back}}></ion-input>
   </ion-item>
   </ion-row>
   <ion-row justify-content-center>
@@ -48,14 +48,14 @@ NOTE: justify-content-center
     </ion-row>
     <ion-row >
         <ion-col>
-            <button ion-button icon-only clear item-end block (click)="presentAlert('This will move to the next card in the stack, if it exists.')">
+            <button *ngIf="cardNumber != 1" ion-button icon-only clear item-end block (click)="decrementCard()">
                <ion-icon name="arrow-back"></ion-icon>
             </button>
           </ion-col>
           <ion-col col-6>
           </ion-col>
           <ion-col>
-              <button ion-button icon-only clear item-start block (click)="presentAlert('This will move to the previous card in the stack, if it exists.')">
+              <button ion-button icon-only clear item-start block (click)="incrementCard()">
                 <ion-icon name="arrow-forward"></ion-icon>
               </button>
           </ion-col>

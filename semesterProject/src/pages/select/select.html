@@ -14,29 +14,19 @@
 
 
 <ion-content padding>
-  <p>Choose a card set to edit!</p>
   <ion-list>
-    
-      <ion-item>
+    <ion-item *ngIf = "noStacks">
+      <ion-label padding>You have no stacks!</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let stack of stacks">
+      
+      <button ion-button (click)="goToCreatePage(stack.stackid, stack.name)">
+        {{stack.name}}
+      </button>
         
-        <button ion-button (click)="goToCreate()">
-          Art History 101, Exam 1
-        </button>
-          
-      </ion-item>
-      <ion-item>
-        <button ion-button (click)="goToCreate()">
-          Art History 101, Exam 2
-        </button>
-      </ion-item>
-      <ion-item>
-        
-        <button ion-button (click)="goToCreate()">
-          Theater 201, Exam 1
-        </button>
-          
-      </ion-item>
+    </ion-item>
   
-    </ion-list>
-         
+
+  </ion-list>
 </ion-content>
+
