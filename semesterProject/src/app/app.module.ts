@@ -25,6 +25,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule} from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environment/environment';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
@@ -55,7 +56,8 @@ import { CardProvider } from '../providers/card/card';
     AngularFireModule.initializeApp(environment.firebaseConfig, 'seniorProject'),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

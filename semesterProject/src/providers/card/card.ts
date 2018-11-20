@@ -117,9 +117,8 @@ export class CardProvider {
     return this.afs.doc(`cards/${cardID}`).delete();
   }
 
-  async createCard(stackID:String, backText:String, backImg:String, frontText:String, frontImg:String) // uses "set"
+  async createCard(id: String, stackID:String, backText:String, backImg:String, frontText:String, frontImg:String) // uses "set"
   {
-    let id = this.afs.createId();
     await this.afs.doc(`cards/${id}`).set({
       back: backText,
       backimage: backImg,

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 /**
  * Generated class for the CreatePage page.
@@ -30,10 +32,14 @@ export class CreatePage {
   imageFront="";
   imageBack="";
   stackNotEmpty:Boolean;
+  loading:Loading;
+  cardID;
+  newCard=false;
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController,
     public navParams: NavParams, private cardProv: CardProvider,
-    public FormBuilder: FormBuilder,) {
+    public FormBuilder: FormBuilder, public loadingCtrl:LoadingController,
+    private storage: AngularFireStorage, private afs:AngularFirestore) {
     this.stackid = this.navParams.get('stackid');
     this.stackname = this.navParams.get('name');
 
@@ -46,12 +52,12 @@ export class CreatePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreatePage');
-    console.log(this.stackid);
-    console.log(this.stackname);
+
   }
 
   existingCard() {
+    if (this.newCard)
+      return false;
     if (this.cardIndex < this.totalCards){
       return true;
     }
@@ -59,12 +65,11 @@ export class CreatePage {
   }
 
   save(){
-    console.log(this.cardForm)
     if (this.existingCard()){
       this.cardProv.editCard(this.cardForm.value.back, this.cardForm.value.backImg, this.cards[this.cardIndex].cardid, this.cardForm.value.front, this.cardForm.value.frontImg);
     }
     else{
-      this.cardProv.createCard(this.stackid, this.cardForm.value.back, this.cardForm.value.backImg, this.cardForm.value.front, this.cardForm.value.frontImg);
+      this.cardProv.createCard(this.cardID, this.stackid, this.cardForm.value.back, this.imageBack, this.cardForm.value.front, this.imageFront);
     }
 
     this.refresh();
@@ -84,14 +89,12 @@ leave()
       {
         text: 'Yes, leave!',
         handler: () => {
+          if(!this.existingCard()) this.deleteCard(true);
           this.navCtrl.pop();
         }
       },
       {
-        text: 'No, stay!',
-        handler: () => {
-          console.log('Disagree clicked');
-        }
+        text: 'No, stay!'
       }
     ]
   });
@@ -112,10 +115,7 @@ leave()
         }
       },
       {
-        text: 'Nevermind.',
-        handler: () => {
-          console.log('Disagree clicked');
-        }
+        text: 'Nevermind.'
       }
     ]});
     confirm.present()
@@ -137,16 +137,19 @@ leave()
     if(await this.cards.length==0)
      {
        this.stackNotEmpty = false;
+       this.newCard=true;
+       this.addCard();
      }
      else
      {
+      this.newCard=false;
       this.stackNotEmpty = true;
       this.front = await this.cards[this.cardIndex].front;
       this.back = await this.cards[this.cardIndex].back;
       this.imageFront = this.cards[this.cardIndex].frontimage;
       this.imageBack = this.cards[this.cardIndex].backimage;
       this.totalCards = await this.cards.length;
-      console.log(this.totalCards);
+      this.cardID = await this.cards[this.cardIndex].cardid;
     }
   }
 
@@ -154,37 +157,40 @@ leave()
   {
     this.cardIndex+=1;
     this.cardNumber+=1;
-    console.log(this.existingCard());
     if(this.existingCard()){
       this.front = this.cards[this.cardIndex].front;
       this.back = this.cards[this.cardIndex].back;
       this.imageFront = this.cards[this.cardIndex].frontimage;
       this.imageBack = this.cards[this.cardIndex].backimage;
+      this.cardID = this.cards[this.cardIndex].cardid;
+      this.newCard=false;
     }
     else {
+      this.newCard=true;
       this.addCard();
     }
-    console.log(this.cardIndex);
   }
 
-  addCard(){
+  async addCard(){
     this.front = '';
     this.back = '';
     this.imageFront = '';
     this.imageBack = '';
+    this.cardID = await this.afs.createId();
+    this.newCard=true;
+    await this.cardProv.createCard(this.cardID, this.stackid, this.back, this.imageBack, this.front, this.imageFront);
   }
 
   decrementCard()
   {
+    this.newCard=false;
     this.cardIndex-=1;
     this.cardNumber-=1;
     this.front = this.cards[this.cardIndex].front;
     this.back = this.cards[this.cardIndex].back;
     this.imageFront = this.cards[this.cardIndex].frontimage;
     this.imageBack = this.cards[this.cardIndex].backimage;
-    
-    console.log(this.cardIndex);
-
+    this.cardID = this.cards[this.cardIndex].cardid;
   }
 
   refresh(){
@@ -194,8 +200,83 @@ leave()
         name: this.stackname});
   }
 
-  deleteCard(){
-    this.cardProv.deleteCard(this.cards[this.cardIndex].cardid);
-    this.refresh();
+  deleteCard(fromLeave:boolean){
+    this.cardProv.deleteCard(this.cardID);
+    if(this.imageFront!="") this.storage.ref("images/"+this.cardID+"1").delete();
+    if(this.imageBack!="") this.storage.ref("images/"+this.cardID+"2").delete();
+    if(!fromLeave)
+      this.refresh();
+  }
+
+
+  async uploadImage(event:FileList, side:Number)
+  {
+    let file = event.item(0);
+    if (file.type.split('/')[0] !== 'image') { 
+      this.presentErrorMessage("You have selected an unsupported file type!");
+      return;
+    }
+    if (file==null)
+      return;
+    this.loading = this.loadingCtrl.create({
+      dismissOnPageChange: true,
+    });
+    this.loading.present();
+   
+    if(this.cards.length==0 || (!(this.existingCard())))
+    {
+      let card = 
+      {
+        front:this.front,
+        back:this.back,
+        frontimage:"",
+        backimage:"",
+        cardid:this.cardID
+      }
+      this.newCard=true;
+      this.cards.push(card);
+    }
+    const path = `images/${this.cardID}${side}`;
+    let ref = this.storage.ref(path);
+    ref.put(file).then(async any=>
+    { 
+        ref.getDownloadURL().subscribe(result=>{
+           if(side==1)
+           {
+            this.afs.collection('cards').doc(this.cardID).update({frontimage:result})
+            .then(()=>
+            {
+              this.cards[this.cardIndex].frontimage=result;
+              this.imageFront=result;
+              this.loading.dismiss();
+            });
+          }
+          else
+          {
+            this.afs.collection('cards').doc(this.cardID).update({backimage:result})
+            .then(()=>
+            {
+              this.cards[this.cardIndex].backimage=result;
+              this.imageBack=result;
+              this.loading.dismiss();
+            });
+          }
+        });
+      });
+  }
+
+  presentErrorMessage(errorMessage:string)
+  {
+    // Displayed for a pending sent request. 
+    let pendingMessage = this.alertCtrl.create({
+      title: 'Error!',
+      message: errorMessage,
+      buttons: [
+        {
+          text: 'Ok!'
+        }
+      ]
+    });
+    pendingMessage.present()
   }
 }
