@@ -10,13 +10,9 @@
       <ion-label padding>You have no stacks!</ion-label>
     </ion-item>
     <ion-item *ngFor="let stack of stacks">
-      
       <button ion-button (click)="goToCardsPage(stack.stackid)">
         {{stack.name}}
       </button>
-        
     </ion-item>
-  
-
   </ion-list>
 </ion-content>

@@ -26,16 +26,19 @@ export class SelectPage {
 
   async ngOnInit()
   {
-    this.stacks = await this.cardProv.getCurrentUserStacks();
-    if (this.stacks.length==0)
-    {
-      this.noStacks = true;
-    }
-
+    await this.cardProv.getCurrentUserStacks(this.stacks).catch(error=>
+      {
+        this.noStacks=true;
+      });
+      if(await this.stacks.length==0)
+      {
+        this.noStacks = false;
+      }
+      else
+        this.noStacks=true;
   }
 
   ionViewWillEnter(){
-    this.ngOnInit();
   }
 
   ionViewDidLoad() {

@@ -41,24 +41,22 @@ export class NewcardsPage {
       message: "Enter a name for this new stack:",
       inputs: [
         {
-          name: 'stacktitle',
+          name: 'name',
           placeholder: 'Stack Title'
         },
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
+          text: 'Cancel'
         },
         {
           text: 'Create!',
-          handler: data => {
+          handler:  data=> {
             let id = this.afs.createId();
-            this.cardProv.createNewStack(data.stacktitle, id);
-
-            this.navCtrl.push(CreatePage, {stackid:id, name:this.stackname});
+            this.cardProv.createNewStack(data.name, id).then(()=>
+            {
+              this.navCtrl.push(CreatePage, {stackid:id, name:data.name});
+            });
           }
         }
       ]

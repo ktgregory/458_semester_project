@@ -11,19 +11,23 @@ export class ViewPage implements OnInit {
 
   stacks = [];
   stackid: string = '';
-  noStacks:Boolean;
+  noStacks=false;
   constructor(public navCtrl: NavController, private cardProv: CardProvider) {
 
   }
 
   async ngOnInit()
   {
-    this.stacks = await this.cardProv.getCurrentUserStacks();
-    if (this.stacks.length==0)
-    {
-      this.noStacks = true;
-    }
-
+    await this.cardProv.getCurrentUserStacks(this.stacks).catch(()=>
+      {
+        this.noStacks=true;
+      });
+      if(await this.stacks.length==0)
+      {
+        this.noStacks = false;
+      }
+      else
+        this.noStacks=true;
   }
 
   goToCardsPage(stackid:string)

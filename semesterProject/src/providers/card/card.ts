@@ -11,16 +11,30 @@ export class CardProvider {
     
   }
 
-  async getCurrentUserStacks()
+  async getCurrentUserStacks(stacks)
   {
-      let stacks = [];
       let uid = await this.auth.getUserID();
       let ref = await this.afs.firestore.collection(`stacks`).where("uid","==",uid); 
-      await ref.get().then((querySnapshot) => { 
-        querySnapshot.forEach((doc) => {
-          stacks.push(doc.data());
+      await ref.onSnapshot((querySnapshot) => { 
+        querySnapshot.docChanges().forEach(async (change) => {
+         let stack= await change.doc.data();
+         if(change.type==="added")
+         {
+          stacks.push(await stack);
+         }
+         if(change.type==="removed")
+         {
+          for(let i=0; i < stacks.length; i++)
+          {
+            if(stacks[i].stackID == stack.stackID)
+            {
+              stacks.splice(i,1);
+            }
+          }
+         }
         })
       });
+
       return stacks; 
   }
 
@@ -33,10 +47,7 @@ export class CardProvider {
         cards.push(doc.data());
       })
     });
-    // if (cards.length==0)
-    // {
-    //   Promise.reject();
-    // }
+
     return cards; 
 
   }

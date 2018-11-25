@@ -20,7 +20,7 @@ export class CardsPage {
   imageFront="";
   imageBack="";
   frontSide=true; //when this is true, show front.
-  stackNotEmpty:Boolean;
+  stackNotEmpty=true;
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, 
     private cardProv: CardProvider, public navParams: NavParams) {
