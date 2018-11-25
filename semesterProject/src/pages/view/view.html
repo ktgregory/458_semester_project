@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>View Cards</ion-title>
+    <ion-title text-center>View Cards</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -10,8 +10,11 @@
       <ion-label padding>You have no stacks!</ion-label>
     </ion-item>
     <ion-item *ngFor="let stack of stacks">
-      <button ion-button (click)="goToCardsPage(stack.stackid)">
-        {{stack.name}}
+      
+      <button ion-button block padding (click)="goToCardsPage(stack.stackid)">
+        <div id="stack-button">
+          {{stack.name}}
+        </div>
       </button>
     </ion-item>
   </ion-list>

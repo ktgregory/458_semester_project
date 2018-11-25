@@ -20,8 +20,10 @@
     </ion-item>
     <ion-item *ngFor="let stack of stacks">
       
-      <button ion-button (click)="goToCreatePage(stack.stackid, stack.name)">
-        {{stack.name}}
+      <button ion-button block padding (click)="goToCreatePage(stack.stackid, stack.name)">
+        <div class="stack-name">
+            {{stack.name}}
+        </div>
       </button>
         
     </ion-item>
