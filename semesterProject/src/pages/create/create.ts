@@ -61,11 +61,9 @@ export class CreatePage {
       });
       
       this.front=this.cardForm.value.front;
-      if(this.cardForm.value.frontImg!="")
-        this.imageFront=this.cardForm.value.frontImg;
+      this.imageFront=this.cardForm.value.frontImg;
       this.back=this.cardForm.value.back;
-      if(this.cardForm.value.backImg!="")
-        this.imageBack=this.cardForm.value.backImg;
+      this.imageBack=this.cardForm.value.backImg;
       this.cardForm = this.FormBuilder.group({
         front: [this.front],
         frontImg: [this.imageFront],
