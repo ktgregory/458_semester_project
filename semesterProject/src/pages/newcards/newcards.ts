@@ -25,10 +25,6 @@ export class NewcardsPage {
 
   stackname = '';
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NewcardsPage');
-  }
-
   goToSelectPage()
   {
     this.navCtrl.push(SelectPage);

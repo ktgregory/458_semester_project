@@ -30,10 +30,7 @@ export class ChangepasswordPage {
       newpassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangepasswordPage');
-  }
+  
 
   async changePassword()
   {
@@ -83,7 +80,7 @@ export class ChangepasswordPage {
       });
 
       this.loading = this.loadingCtrl.create({
-        dismissOnPageChange: true,
+        dismissOnPageChange: true
       });
       this.loading.present();
     }

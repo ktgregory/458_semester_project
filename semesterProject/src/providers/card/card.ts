@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AuthProvider } from '../auth/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 
 @Injectable()
 export class CardProvider {
 
  
-  constructor(private auth: AuthProvider, private afs: AngularFirestore) {
+  constructor(private auth: AuthProvider, private afs: AngularFirestore,
+    private storage: AngularFireStorage) {
     
   }
 
@@ -21,16 +23,11 @@ export class CardProvider {
          if(change.type==="added")
          {
           stacks.push(await stack);
+          stacks.sort(this.compareStrings);
          }
          if(change.type==="removed")
          {
-          for(let i=0; i < stacks.length; i++)
-          {
-            if(stacks[i].stackID == stack.stackID)
-            {
-              stacks.splice(i,1);
-            }
-          }
+          stacks = this.removeStack(stacks, stack);
          }
         })
       });
@@ -38,17 +35,56 @@ export class CardProvider {
       return stacks; 
   }
 
-  async getCardsByStackID(stackID:string)
+ removeStack(stacks, stackToRemove)
+ {
+  for(let i=0; i < stacks.length; i++)
   {
-    let cards = [];
+    if(stacks[i].stackid == stackToRemove.stackid)
+    {
+      stacks.splice(i,1);
+      stacks.sort(this.compareStrings);
+    }
+  }
+  return stacks;
+ }
+
+ removeCard(cards, cardToRemove)
+ {
+  for(let i=0; i < cards.length; i++)
+  {
+    if(cards[i].cardid == cardToRemove.cardid)
+    {
+      cards.splice(i,1);
+      cards.sort(this.compareStrings);
+    }
+  }
+  return cards;
+ }
+  compareStrings(stack1,stack2)
+  {
+    if(stack2.name>stack1.name)
+      return -1;
+    else
+      return 1;
+  }
+
+  async getCardsByStackID(cards, stackID:string)
+  {
     let ref = await this.afs.firestore.collection(`cards`).where("stackid","==",stackID); 
-    await ref.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        cards.push(doc.data());
+    await ref.onSnapshot((querySnapshot) => { 
+      querySnapshot.docChanges().forEach(async (change) => {
+       let card = await change.doc.data();
+       if(change.type==="added")
+       {
+        cards.push(card);
+       }
+       if(change.type==="removed")
+       {
+        cards = this.removeCard(cards, card);
+       }
       })
     });
-
-    return cards; 
+    return await cards; 
 
   }
 
@@ -66,35 +102,15 @@ export class CardProvider {
 
   async deleteStackWithID(stackID:string)
   {
-    let cards = await this.getCardsByStackID(stackID);
-    for (let card of cards){
-      this.deleteCard(card.cardid);
-    }
+    let cards = [];
+    await this.getCardsByStackID(cards, stackID);
+    cards.forEach(async card=>
+      {
+        await this.deleteCard(card.cardid, card.frontimage, card.backimage);
+      });
     await this.afs.collection(`stacks`).doc(stackID).delete();
   }
 
-  // async changeUserInfo()
-  // {
-  //   let userID = await this.authData.getUserID();
-  //   this.afs.doc(`users/${userID}`).update({
-  //     firstname:this.userForm.value.firstname,
-  //     lastname:this.userForm.value.lastname,
-  //     school:this.userForm.value.school
-  //   }).then(
-  //     any=>
-  //     {
-  //         let alert = this.alertCtrl.create({
-  //           message: "Your information has been updated.",
-  //           buttons: [
-  //             {
-  //               text: "Ok",
-  //               role: 'cancel'
-  //             }
-  //           ]
-  //         });
-  //       alert.present();      
-  //     }
-  //   );
 
   async editCard(backText:String, backImg:String, cardID:String, frontText:String, frontImg:String) //uses "update"
   { 
@@ -121,10 +137,16 @@ export class CardProvider {
         frontimage: frontImg
       });
     }
+
+    await this.afs.doc(`cards/${cardID}`).update({
+      new: false
+    });
   }
 
-  async deleteCard(cardID:String)
+  async deleteCard(cardID:String, frontimage, backimage)
   {
+    if(frontimage!="") this.storage.ref("images/"+cardID+"1").delete();
+    if(backimage!="" ) this.storage.ref("images/"+cardID+"2").delete();
     return this.afs.doc(`cards/${cardID}`).delete();
   }
 
@@ -136,7 +158,8 @@ export class CardProvider {
       front: frontText,
       frontimage: frontImg,
       stackid: stackID,
-      cardid: id
+      cardid: id,
+      new:true
     });
   }
 

@@ -11,7 +11,9 @@ export class ViewPage implements OnInit {
 
   stacks = [];
   stackid: string = '';
-  noStacks=false;
+  noStacks:boolean;
+  hasLoaded=false;
+  timeout=3000;
   constructor(public navCtrl: NavController, private cardProv: CardProvider) {
 
   }
@@ -28,13 +30,13 @@ export class ViewPage implements OnInit {
       }
       else
         this.noStacks=true;
+
   }
 
   goToCardsPage(stackid:string)
   {
       this.navCtrl.push(CardsPage, {'stackid': stackid});
   }
-
 
 
 }

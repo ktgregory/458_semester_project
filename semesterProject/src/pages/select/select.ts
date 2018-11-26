@@ -4,13 +4,6 @@ import { CreatePage } from '../create/create';
 import { CardProvider } from '../../providers/card/card';
 
 
-/**
- * Generated class for the SelectPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-select',
@@ -26,7 +19,7 @@ export class SelectPage {
 
   async ngOnInit()
   {
-    await this.cardProv.getCurrentUserStacks(this.stacks).catch(error=>
+    await this.cardProv.getCurrentUserStacks(this.stacks).catch(()=>
       {
         this.noStacks=true;
       });
@@ -36,13 +29,13 @@ export class SelectPage {
       }
       else
         this.noStacks=true;
+    
+    this.stacks.sort(this.cardProv.compareStrings);
   }
 
-  ionViewWillEnter(){
-  }
+  ionViewWillEnter()
+  {
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SelectPage');
   }
 
   goToCreatePage(stackid:string, stackname:string){

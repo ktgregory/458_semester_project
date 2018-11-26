@@ -3,6 +3,7 @@ import { NavController, AlertController, NavParams} from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
 import { AsyncPipe } from '@angular/common';
 import { timeoutWith } from 'rxjs/operators';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'page-cards',
@@ -20,29 +21,25 @@ export class CardsPage {
   imageFront="";
   imageBack="";
   frontSide=true; //when this is true, show front.
-  stackNotEmpty=true;
+  stackNotEmpty=false;
+  hasLoaded=false;
+  timeout=500;
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, 
-    private cardProv: CardProvider, public navParams: NavParams) {
+    private cardProv: CardProvider, public navParams: NavParams, private afs: AngularFirestore) {
       this.stackid = navParams.get("stackid");
   }
 
   async ngOnInit()
   {
-    this.cards = await this.cardProv.getCardsByStackID(this.stackid);
-
+    await this.getCards();
+    this.totalCards = await this.cards.length;
       if(await this.cards.length==0)
       {
         this.stackNotEmpty = false;
       }
       else
       {
-        this.stackNotEmpty = true;
-        this.front = await this.cards[this.cardIndex].front;
-        this.back = await this.cards[this.cardIndex].back;
-        this.imageFront = this.cards[this.cardIndex].frontimage;
-        this.imageBack = this.cards[this.cardIndex].backimage;
-        this.totalCards = await this.cards.length;
       }
   }
 
@@ -56,6 +53,13 @@ export class CardsPage {
     {
       this.frontSide = true;
     }
+  }
+
+  ionViewDidLoad()
+  {
+    setTimeout(() => {
+      this.hasLoaded=true;
+    }, this.timeout);
   }
 
   incrementCard()
@@ -81,6 +85,44 @@ export class CardsPage {
 
   }
   
+
+  async getCards()
+  {
+    let ref = await this.afs.firestore.collection(`cards`).where("stackid","==",this.stackid); 
+    await ref.onSnapshot((querySnapshot) => { 
+      querySnapshot.docChanges().forEach(async (change) => {
+       let newCard = await change.doc.data();
+       if(change.type==="added")
+       {
+        console.log("card added");
+        this.cards.push(await newCard);
+        if (this.cards.length==1)
+        {
+          this.stackNotEmpty = true;
+          this.front = await this.cards[this.cardIndex].front;
+          this.back = await this.cards[this.cardIndex].back;
+          this.imageFront = this.cards[this.cardIndex].frontimage;
+          this.imageBack = this.cards[this.cardIndex].backimage;
+        }
+       }
+       if(change.type==="removed")
+       {
+        this.cards = this.cardProv.removeCard(this.cards, await newCard);
+       }
+       if(change.type==="modified")
+       {
+         this.cards.forEach(card=>
+          {
+            if(card.cardid==newCard.cardid)
+            {
+              card = newCard;
+            }
+          })
+       }
+      })
+    });
+
+  }
 
 
 }

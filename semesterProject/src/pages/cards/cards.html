@@ -5,13 +5,13 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngIf="stackNotEmpty==false">
+  <ion-card *ngIf="cards.length==0 && hasLoaded">
       <ion-label padding>This stack is empty!</ion-label>
   </ion-card>
-  <ion-card *ngIf="stackNotEmpty">
+  <ion-card *ngIf="cards.length!=0">
     <!--<img src="../../assets/imgs/xbox-logo.jpg"/>-->
     <ion-card-content>
-      <ion-label>{{cardNumber}} of {{totalCards}}</ion-label>
+      <ion-label>{{cardNumber}} of {{cards.length}}</ion-label>
       <ion-grid>
         <ng-container *ngIf="frontSide">
           <img *ngIf="imageFront!=''" src={{imageFront}}>
@@ -39,7 +39,7 @@
       </ion-col>
 
       <ion-col>
-        <button *ngIf="cardNumber != totalCards" ion-button icon-only item-end block (click)="incrementCard()">
+        <button *ngIf="cardNumber != cards.length" ion-button icon-only item-end block (click)="incrementCard()">
            <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-col>
