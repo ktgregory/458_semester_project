@@ -19,7 +19,7 @@
 <ion-row justify-content-center>
   <ion-item>
     <ion-label stacked>Side 1</ion-label>
-    <ion-input type="Text" placeholder={{this.front}} formControlName="front"></ion-input>
+    <ion-input type="Text" value={{this.front}} formControlName="front"></ion-input>
   </ion-item>
   <ng-container *ngIf="imageFront">
     <img src="{{imageFront}}">
@@ -31,7 +31,7 @@
 <ion-row justify-content-center> 
   <ion-item>
     <ion-label stacked>Side 2</ion-label>
-    <ion-input type="Text" placeholder={{this.back}} formControlName="back"></ion-input>
+    <ion-input type="Text" value={{this.back}} formControlName="back"></ion-input>
   </ion-item>
   </ion-row>
   <ion-row justify-content-center>

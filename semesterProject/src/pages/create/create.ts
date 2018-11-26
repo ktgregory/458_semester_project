@@ -59,6 +59,19 @@ export class CreatePage {
         this.newCard = false;
         this.loading.dismiss();
       });
+      
+      this.front=this.cardForm.value.front;
+      if(this.cardForm.value.frontImg!="")
+        this.imageFront=this.cardForm.value.frontImg;
+      this.back=this.cardForm.value.back;
+      if(this.cardForm.value.backImg!="")
+        this.imageBack=this.cardForm.value.backImg;
+      this.cardForm = this.FormBuilder.group({
+        front: [this.front],
+        frontImg: [this.imageFront],
+        back: [this.back],
+        backImg: [this.imageBack]
+      });
     
   }
  
@@ -109,18 +122,7 @@ leave()
       this.addCard();
       this.newCard=true;
   
-    //   {
-    //     console.log("else block ngoninit");
-    //    this.newCard= false;
-    //    this.stackNotEmpty = true;
-    //    this.front = await this.cards[this.cardIndex].front;
-    //    this.back = await this.cards[this.cardIndex].back;
-    //    this.imageFront = this.cards[this.cardIndex].frontimage;
-    //    this.imageBack = this.cards[this.cardIndex].backimage;
-    //    this.totalCards = await this.cards.length;
-    //    this.cardID = await this.cards[this.cardIndex].cardid;
-    //  }
-    
+  
   }
 
   ionViewWillLeave()
@@ -155,6 +157,12 @@ leave()
       this.imageBack = this.cards[this.cardIndex].backimage;
       this.cardID = this.cards[this.cardIndex].cardid;
       this.newCard=false;
+      this.cardForm = this.FormBuilder.group({
+        front: [this.front],
+        frontImg: [this.imageFront],
+        back: [this.back],
+        backImg: [this.imageBack]
+      });
     }
     else
     {
@@ -176,6 +184,7 @@ leave()
   {
     if(this.newCard) 
       this.deleteCard();
+    
     this.newCard=false;
     this.cardIndex-=1;
     this.cardNumber-=1;
@@ -184,6 +193,12 @@ leave()
     this.imageFront = this.cards[this.cardIndex].frontimage;
     this.imageBack = this.cards[this.cardIndex].backimage;
     this.cardID = this.cards[this.cardIndex].cardid;
+    this.cardForm = this.FormBuilder.group({
+      front: [this.front],
+      frontImg: [this.imageFront],
+      back: [this.back],
+      backImg: [this.imageBack]
+    });
   }
 
   refresh(){
@@ -193,10 +208,9 @@ leave()
         name: this.stackname});
   }
 
-  deleteCard(){
-
+  deleteCard()
+  {
     this.cardProv.deleteCard(this.cardID, this.imageFront, this.imageBack);
-
   }
 
 
@@ -269,20 +283,24 @@ leave()
        if(change.type==="added")
        {
         this.cards.push(await card);
-        console.log("pushed new card to array via listener");
         if(card.new==false)
         {
           this.totalCards++;
           if(this.totalCards==1)
           {
             this.deleteInitialTempCard();
-            console.log("deleting initial temp");
           }
         }
        }
        if(change.type=="removed")
        {
+
          this.removeCard(await card);
+
+       }
+       if(change.type==="modified")
+       {
+         this.updateCardInfo(await card);
        }
       })
     });
@@ -294,7 +312,22 @@ leave()
    {
      if(this.cards[i].cardid == cardToRemove.cardid)
      {
-       if(this.cards[i].new==false) this.totalCards--;
+       if(this.cards[i].new==false) 
+       {
+        this.totalCards--;
+        if(i!=0)
+        {
+          this.decrementCard();
+          this.cardIndex=i-1;
+          this.cardNumber=i;
+        } 
+        else 
+        {
+          this.incrementCard();
+          this.cardIndex=i;
+          this.cardNumber=i+1;
+        }
+       }
        this.cards.splice(i,1);
      }
    }
@@ -308,7 +341,6 @@ leave()
         {
           this.cardProv.deleteCard(card.cardid, "", "").then(()=>
           {
-            console.log("DELETE FIRST NEW");
             this.newCard = false;
             this.front =  this.cards[0].front;
             this.back =  this.cards[0].back;
@@ -322,4 +354,14 @@ leave()
       })
   }
 
+  updateCardInfo(cardToUpdate)
+  {
+   for(let i=0; i < this.cards.length; i++)
+   {
+     if(this.cards[i].cardid == cardToUpdate.cardid)
+     {
+       this.cards[i]=cardToUpdate;
+     }
+   }
+  }
 }
