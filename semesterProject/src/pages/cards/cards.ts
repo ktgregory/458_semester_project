@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, NavParams} from 'ionic-angular';
 import { CardProvider } from '../../providers/card/card';
-import { AsyncPipe } from '@angular/common';
-import { timeoutWith } from 'rxjs/operators';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
@@ -40,6 +38,7 @@ export class CardsPage {
       }
       else
       {
+        
       }
   }
 
@@ -94,7 +93,6 @@ export class CardsPage {
        let newCard = await change.doc.data();
        if(change.type==="added")
        {
-        console.log("card added");
         this.cards.push(await newCard);
         if (this.cards.length==1)
         {

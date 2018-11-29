@@ -53,17 +53,15 @@ export class CreatePage {
     if(this.newCard) 
       this.totalCards++;
 
-      await this.cardProv.editCard(this.cardForm.value.back, this.cardForm.value.backImg, this.cardID, 
-        this.cardForm.value.front, this.cardForm.value.frontImg).then(async()=>
+      await this.cardProv.editCard(this.cardForm.value.back, this.imageBack, this.cardID, 
+        this.cardForm.value.front, this.imageFront).then(async()=>
       {
         this.newCard = false;
         this.loading.dismiss();
       });
       
       this.front=this.cardForm.value.front;
-      this.imageFront=this.cardForm.value.frontImg;
       this.back=this.cardForm.value.back;
-      this.imageBack=this.cardForm.value.backImg;
       this.cardForm = this.FormBuilder.group({
         front: [this.front],
         frontImg: [this.imageFront],
@@ -147,6 +145,8 @@ leave()
   {
     this.cardIndex+=1;
     this.cardNumber+=1;
+    this.imageFront='';
+    this.imageBack='';
     if(this.cardIndex<this.cards.length)
     {
       this.front = this.cards[this.cardIndex].front;
@@ -157,9 +157,9 @@ leave()
       this.newCard=false;
       this.cardForm = this.FormBuilder.group({
         front: [this.front],
-        frontImg: [this.imageFront],
+        frontImg: [''],
         back: [this.back],
-        backImg: [this.imageBack]
+        backImg: ['']
       });
     }
     else
@@ -182,7 +182,8 @@ leave()
   {
     if(this.newCard) 
       this.deleteCard();
-    
+    this.imageFront='';
+    this.imageBack='';
     this.newCard=false;
     this.cardIndex-=1;
     this.cardNumber-=1;
@@ -193,9 +194,9 @@ leave()
     this.cardID = this.cards[this.cardIndex].cardid;
     this.cardForm = this.FormBuilder.group({
       front: [this.front],
-      frontImg: [this.imageFront],
+      frontImg: [''],
       back: [this.back],
-      backImg: [this.imageBack]
+      backImg: ['']
     });
   }
 
@@ -215,12 +216,13 @@ leave()
   async uploadImage(event:FileList, side:Number)
   {
     let file = event.item(0);
+
+    if (file==null)
+      return;
     if (file.type.split('/')[0] !== 'image') { 
       this.presentErrorMessage("You have selected an unsupported file type!");
       return;
     }
-    if (file==null)
-      return;
     this.loading = this.loadingCtrl.create({
       dismissOnPageChange: true
     });

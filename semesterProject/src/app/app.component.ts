@@ -15,13 +15,8 @@ export class MyApp {
     statusBar: StatusBar, splashScreen: SplashScreen ) {
     const authObserver = afAuth.authState.subscribe(user => {
       if (user) {
-
-   
-          this.rootPage = TabsPage;
-
-       
+        this.rootPage = TabsPage;
         authObserver.unsubscribe();
-        
 
       } else {
         this.rootPage = LoginPage;
